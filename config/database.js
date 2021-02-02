@@ -8,6 +8,7 @@ const db = new Sequelize({
   password: 'test_pwd',
   database: 'airbnb_express',
   // By default Sequelize adds createdAt and updatedAt to each model
+  // false disables this
   define: {
     timestamps: false,
   },
