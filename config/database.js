@@ -10,7 +10,7 @@ const db = new Sequelize({
   // By default Sequelize adds createdAt and updatedAt to each model
   // false disables this
   define: {
-    timestamps: false,
+    timestamps: true,
   },
   logging: false,
 });

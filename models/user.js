@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import db from '../config/database';
+import Place from './place';
+import Review from './review';
 
 const User = db.define('users', {
   email: {
@@ -19,5 +21,13 @@ const User = db.define('users', {
     allowNull: true,
   },
 });
+
+// One to Many
+User.hasMany(Place, { as: 'places', foreignKey: 'userId' });
+Place.belongsTo(User, { foreignKey: 'userId' });
+
+// One to Many
+User.hasMany(Review, { as: 'reviews', foreignKey: 'userId' });
+Review.belongsTo(User, { foreignKey: 'userId' });
 
 export default User;

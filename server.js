@@ -15,10 +15,15 @@ db.authenticate()
   .then(() => console.log('Database Connected'))
   .catch((error) => console.log(error.message));
 
-db.sync({ force: true });
+// db.sync({ force: true });
+db.sync();
+
 // Recommended to have migrations in production
 
 app.get('/', (req, res) => res.send('HELLO'));
+
+// JSON Parser
+app.use(express.json());
 
 // Routes
 stateRouting(app);
@@ -32,5 +37,3 @@ placeRouting(app);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-export default app;

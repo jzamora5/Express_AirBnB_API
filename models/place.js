@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import db from '../config/database';
+import Amenity from './amenity';
 
 const Place = db.define('places', {
   name: {
@@ -39,5 +40,8 @@ const Place = db.define('places', {
     allowNull: true,
   },
 });
+
+Place.belongsToMany(Amenity, { through: 'place_amenity' });
+Amenity.belongsToMany(Place, { through: 'place_amenity' });
 
 export default Place;
