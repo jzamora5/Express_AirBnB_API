@@ -12,6 +12,7 @@ const db = new Sequelize({
   define: {
     timestamps: false,
   },
+  logging: false,
 });
 
 export default db;
