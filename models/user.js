@@ -23,11 +23,17 @@ const User = db.define('users', {
 });
 
 // One to Many
-User.hasMany(Place, { as: 'places', foreignKey: 'userId' });
-Place.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Place, {
+  as: 'places',
+  foreignKey: { name: 'userId', allowNull: false },
+});
+Place.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false } });
 
 // One to Many
-User.hasMany(Review, { as: 'reviews', foreignKey: 'userId' });
-Review.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Review, {
+  as: 'reviews',
+  foreignKey: { name: 'userId', allowNull: false },
+});
+Review.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false } });
 
 export default User;

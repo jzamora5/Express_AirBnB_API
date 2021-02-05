@@ -13,6 +13,7 @@ function cityRouting(app) {
       cities = await City.findAll();
     } catch (err) {
       console.log(err.message);
+      return res.status(404).send('Not Found');
     }
 
     res.status(200).send(cities);
@@ -65,7 +66,7 @@ function cityRouting(app) {
     const { state_id } = req.params;
 
     if (!state_id) {
-      return res.status(404).send('Not State Passed');
+      return res.status(404).send('No State Passed');
     }
 
     if (body.name === undefined) {

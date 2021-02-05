@@ -12,6 +12,7 @@ function reviewRouting(app) {
       reviews = await Review.findAll();
     } catch (err) {
       console.log(err.message);
+      return res.status(404).send('Not Found');
     }
 
     res.status(200).send(reviews);
