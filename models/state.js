@@ -9,7 +9,10 @@ const State = db.define('states', {
   },
 });
 
-State.hasMany(City, { as: 'cities', foreignKey: 'stateId' });
-City.belongsTo(State, { foreignKey: 'stateId' });
+State.hasMany(City, {
+  as: 'cities',
+  foreignKey: { name: 'stateId', allowNull: false },
+});
+City.belongsTo(State, { foreignKey: { name: 'stateId', allowNull: false } });
 
 export default State;

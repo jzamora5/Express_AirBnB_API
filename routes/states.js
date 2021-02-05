@@ -12,6 +12,7 @@ function stateRouting(app) {
       states = await State.findAll();
     } catch (err) {
       console.log(err.message);
+      res.status(404).send('Not Found');
     }
 
     res.status(200).send(states);
@@ -25,6 +26,7 @@ function stateRouting(app) {
     try {
       state = await State.findByPk(state_id);
     } catch (err) {
+      console.log(err.message);
       return res.status(404).send('Not Found');
     }
 
@@ -41,12 +43,18 @@ function stateRouting(app) {
     try {
       state = await State.findByPk(state_id);
     } catch (err) {
+      console.log(err.message);
       return res.status(404).send('Not Found');
     }
 
     if (!state) return res.status(404).send('Not Found');
 
-    await state.destroy();
+    try {
+      await state.destroy();
+    } catch (err) {
+      console.log(err.message);
+      return res.status(404).send('Could Not Delete');
+    }
 
     return res.status(200).send();
   });
@@ -59,7 +67,12 @@ function stateRouting(app) {
     }
 
     const state = State.build(body);
-    await state.save();
+
+    try {
+      await state.save();
+    } catch (err) {
+      return res.status(500).send('Could Not Create');
+    }
 
     return res.status(200).send(state);
   });
@@ -84,7 +97,11 @@ function stateRouting(app) {
       if (!ignore.includes(key)) state[key] = value;
     }
 
-    await state.save();
+    try {
+      await state.save();
+    } catch (err) {
+      return res.status(500).send('Could Not Update');
+    }
 
     return res.status(200).send(state);
   });
