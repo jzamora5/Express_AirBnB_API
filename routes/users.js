@@ -12,7 +12,7 @@ function userRouting(app) {
       users = await User.findAll();
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('Users Not Found');
     }
 
     res.status(200).send(users);
@@ -27,10 +27,10 @@ function userRouting(app) {
       user = await User.findByPk(user_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('User Not Found');
     }
 
-    if (!user) return res.status(404).send('Not Found');
+    if (!user) return res.status(404).send('User Not Found');
 
     return res.status(200).send(user);
   });
@@ -44,16 +44,16 @@ function userRouting(app) {
       user = await User.findByPk(user_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('User Not Found');
     }
 
-    if (!user) return res.status(404).send('Not Found');
+    if (!user) return res.status(404).send('User Not Found');
 
     try {
       await user.destroy();
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Could Not Delete');
+      return res.status(404).send('Could Not Delete User');
     }
 
     return res.status(200).send();
@@ -76,7 +76,7 @@ function userRouting(app) {
       await user.save();
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send('Could Not Create');
+      return res.status(500).send('Could Not Create User');
     }
 
     return res.status(200).send(user);
@@ -92,10 +92,10 @@ function userRouting(app) {
       user = await User.findByPk(user_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('User Not Found');
     }
 
-    if (!user) return res.status(404).send('Not Found');
+    if (!user) return res.status(404).send('User Not Found');
 
     const ignore = ['id', 'createdAt', 'updatedAt'];
 
@@ -106,7 +106,7 @@ function userRouting(app) {
     try {
       await user.save();
     } catch (err) {
-      return res.status(500).send('Could Not Update');
+      return res.status(500).send('Could Not Update User');
     }
 
     return res.status(200).send(user);

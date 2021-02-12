@@ -7,13 +7,26 @@ function cityRouting(app) {
   const router = express.Router();
   app.use('/', router);
 
-  router.get('/cities', async (req, res) => {
-    let cities;
+  router.get('/states/:state_id/cities', async (req, res) => {
+    const { state_id } = req.params;
+
+    let state;
+
     try {
-      cities = await City.findAll();
+      state = await State.findByPk(state_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('State Not Found');
+    }
+
+    if (!state) return res.status(404).send('State Not Found');
+
+    let cities;
+    try {
+      cities = await state.getCities();
+    } catch (err) {
+      console.log(err.message);
+      return res.status(404).send('Cities Not Found');
     }
 
     res.status(200).send(cities);
@@ -28,10 +41,10 @@ function cityRouting(app) {
       city = await City.findByPk(city_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('City Not Found');
     }
 
-    if (!city) return res.status(404).send('Not Found');
+    if (!city) return res.status(404).send('City Not Found');
 
     return res.status(200).send(city);
   });
@@ -45,16 +58,16 @@ function cityRouting(app) {
       city = await City.findByPk(city_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('City Not Found');
     }
 
-    if (!city) return res.status(404).send('Not Found');
+    if (!city) return res.status(404).send('City Not Found');
 
     try {
       await city.destroy();
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Could Not Delete');
+      return res.status(404).send('Could Not Delete City');
     }
 
     return res.status(200).send();
@@ -82,6 +95,8 @@ function cityRouting(app) {
       return res.status(404).send('State Not Found');
     }
 
+    if (!state) return res.status(404).send('State Not Found');
+
     const city = City.build(body);
     city.stateId = state_id;
 
@@ -89,7 +104,7 @@ function cityRouting(app) {
       await city.save();
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send('Could Not Create');
+      return res.status(500).send('Could Not Create City ');
     }
 
     return res.status(200).send(city);
@@ -105,12 +120,12 @@ function cityRouting(app) {
       city = await City.findByPk(city_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('City Not Found');
     }
 
-    if (!city) return res.status(404).send('Not Found');
+    if (!city) return res.status(404).send('City Not Found');
 
-    const ignore = ['id', 'createdAt', 'updatedAt'];
+    const ignore = ['id', 'stateId', 'createdAt', 'updatedAt'];
 
     for (const [key, value] of Object.entries(body)) {
       if (!ignore.includes(key)) city[key] = value;
@@ -119,7 +134,7 @@ function cityRouting(app) {
     try {
       await city.save();
     } catch (err) {
-      return res.status(500).send('Could Not Update');
+      return res.status(500).send('Could Not Update City');
     }
 
     return res.status(200).send(city);

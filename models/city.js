@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 import db from '../config/database';
-import State from './state';
+import Place from './place';
 
 const City = db.define('cities', {
   name: {
@@ -8,5 +8,10 @@ const City = db.define('cities', {
     allowNull: false,
   },
 });
+
+City.hasMany(Place, {
+  foreignKey: { name: 'cityId', allowNull: false },
+});
+Place.belongsTo(City, { foreignKey: { name: 'cityId', allowNull: false } });
 
 export default City;

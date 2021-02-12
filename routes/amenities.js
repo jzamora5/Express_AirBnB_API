@@ -12,7 +12,7 @@ function amenityRouting(app) {
       amenities = await Amenity.findAll();
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('Amenities Not Found');
     }
 
     res.status(200).send(amenities);
@@ -27,10 +27,10 @@ function amenityRouting(app) {
       amenity = await Amenity.findByPk(amenity_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('Amenity Not Found');
     }
 
-    if (!amenity) return res.status(404).send('Not Found');
+    if (!amenity) return res.status(404).send('Amenity Not Found');
 
     return res.status(200).send(amenity);
   });
@@ -44,16 +44,16 @@ function amenityRouting(app) {
       amenity = await Amenity.findByPk(amenity_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('Amenity Not Found');
     }
 
-    if (!amenity) return res.status(404).send('Not Found');
+    if (!amenity) return res.status(404).send('Amenity Not Found');
 
     try {
       await amenity.destroy();
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Could Not Delete');
+      return res.status(404).send('Could Not Delete Amenity');
     }
 
     return res.status(200).send();
@@ -72,7 +72,7 @@ function amenityRouting(app) {
       await amenity.save();
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send('Could Not Create');
+      return res.status(500).send('Could Not Create Amenity');
     }
 
     return res.status(200).send(amenity);
@@ -88,10 +88,10 @@ function amenityRouting(app) {
       amenity = await Amenity.findByPk(amenity_id);
     } catch (err) {
       console.log(err.message);
-      return res.status(404).send('Not Found');
+      return res.status(404).send('Amenity Not Found');
     }
 
-    if (!amenity) return res.status(404).send('Not Found');
+    if (!amenity) return res.status(404).send('Amenity Not Found');
 
     const ignore = ['id', 'createdAt', 'updatedAt'];
 
@@ -102,7 +102,7 @@ function amenityRouting(app) {
     try {
       await amenity.save();
     } catch (err) {
-      return res.status(500).send('Could Not Update');
+      return res.status(500).send('Could Not Update Amenity');
     }
 
     return res.status(200).send(amenity);
