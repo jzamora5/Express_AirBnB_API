@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import db from '../config/database';
 import Amenity from './amenity';
+import Review from './review';
 
 const Place = db.define('places', {
   name: {
@@ -43,5 +44,10 @@ const Place = db.define('places', {
 
 Place.belongsToMany(Amenity, { through: 'place_amenity' });
 Amenity.belongsToMany(Place, { through: 'place_amenity' });
+
+Place.hasMany(Review, {
+  foreignKey: { name: 'placeId', allowNull: false },
+});
+Review.belongsTo(Review, { foreignKey: { name: 'placeId', allowNull: false } });
 
 export default Place;

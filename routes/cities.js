@@ -104,7 +104,7 @@ function cityRouting(app) {
       await city.save();
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send('Could Not Create City ');
+      return res.status(500).send('Could Not Create City');
     }
 
     return res.status(200).send(city);
